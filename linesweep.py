@@ -55,15 +55,10 @@ def close_line(i, open_lines):
 			return True
 	return False
 
-'''
+
 def mergesort (array):
-	if len(array) == 2:
-		if array[0].x > array[1].x:
-			temp = array[0]
-			array[0] = array[1]
-			array[1] = temp
-		return array
-'''
+	pass
+
 
 def main ():
 	''' Reading of file '''
@@ -85,11 +80,12 @@ def main ():
 		lines.append(li)
 
 	''' Sort points '''
+	points = sorted(points, key=lambda Point: Point.x)
+
 	#points = mergesort(points)
 	#for i in points:
 	#	print(i.x)
 
-	points = sorted(points, key=lambda Point: Point.x)
 
 	''' Check intersections'''
 	counter = 0
@@ -100,9 +96,9 @@ def main ():
 			continue
 		else:
 			for j in open_lines:
-				x_value = intersection_x(i, j)
-				y_value = intersection_y(i, x_value)
-				if within_bounds(x_value, "x", i, j) and within_bounds(y_value, "y", i, j):
+				x_value = intersection_x(lines[i.line_no], lines[j.line_no])
+				y_value = intersection_y(lines[i.line_no], x_value)
+				if within_bounds(x_value, "x", lines[i.line_no], lines[j.line_no]) and within_bounds(y_value, "y", lines[i.line_no], lines[i.line_no]):
 					counter += 1
 			open_lines.append(i)
 
