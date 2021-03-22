@@ -22,30 +22,12 @@ def intersection_x (line1, line2):
 	return x_value
 
 
-def intersection_y (line, x):
-	y_value = (line.m * x) + line.b
-	return y_value
-
-
-def within_bounds (intersection, mode, line1, line2):
-	if mode == "x":
-		# endpoint1 must be the lower bound
-		if (intersection >= line1.endpoint1.x) and (intersection <= line1.endpoint2.x):
-			if (intersection >= line2.endpoint1.x) and (intersection <= line2.endpoint2.x):
-				return True
-		return False
-
-	elif mode == "y":
-		# endpoint1 or 2 may be the lower bound
-		if (intersection >= line1.endpoint1.y) and (intersection <= line1.endpoint2.y):
-			if (intersection >= line2.endpoint1.y) and (intersection <= line2.endpoint2.y):
-				return True
-		if (intersection >= line1.endpoint2.y) and (intersection <= line1.endpoint1.y):
-			if (intersection >= line2.endpoint2.y) and (intersection <= line2.endpoint1.y):
-				return True
-		return False
-	else:
-		print("???")
+def within_bounds (intersection, line1, line2):
+	# endpoint1 must be the lower bound
+	if (intersection >= line1.endpoint1.x) and (intersection <= line1.endpoint2.x):
+		if (intersection >= line2.endpoint1.x) and (intersection <= line2.endpoint2.x):
+			return True
+	return False
 
 
 def close_line(i, open_lines):
@@ -97,8 +79,7 @@ def main ():
 		else:
 			for j in open_lines:
 				x_value = intersection_x(lines[i.line_no], lines[j.line_no])
-				y_value = intersection_y(lines[i.line_no], x_value)
-				if within_bounds(x_value, "x", lines[i.line_no], lines[j.line_no]) and within_bounds(y_value, "y", lines[i.line_no], lines[i.line_no]):
+				if within_bounds(x_value, lines[i.line_no], lines[j.line_no]):
 					counter += 1
 			open_lines.append(i)
 
